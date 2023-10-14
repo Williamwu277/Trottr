@@ -22,7 +22,7 @@ class Maps():
 
     # Generate the string for the location bias
     def __generate_location_bias(self) -> str:
-        return "circle:" + str(self.dist) + "@" + ",".join(map(str, self.location)) #TODO: implement self.radius
+        return "circle:" + str(self.dist) + "@" + ",".join(map(str, self.location))
 
     def search(self, query: str): #TODO: specify output type
         if SEARCH_MODE == "find":
