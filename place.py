@@ -39,9 +39,6 @@ class Place:
         self.price_rating = price_rating
         self.categories = categories
 
-        
-        
-
     def from_raw(self, raw: dict) -> None:
         #self.address = raw[""]
         self.place_id = raw['place_id']
@@ -50,3 +47,14 @@ class Place:
         self.price_rating = int(raw["price_level"])
         self.rating = float(raw["rating"])
         self.categories = raw["types"]
+
+class Route:
+    def __init__(self, place_a: Place, place_b: Place, raw: dict):
+        this.place_a = place_a
+        this.place_b = place_b
+        this.route = list()
+        this.total_dist = path['legs']['distance']['value']
+        this.total_time = path['legs']['duration']['value']
+        this.route.append(raw['legs']['steps']['start_location'])
+        for path in raw['legs']['steps']:
+            route.append(raw['legs']['steps']['end_location'])
