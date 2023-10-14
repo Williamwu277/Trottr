@@ -48,23 +48,26 @@ class Place:
             self.open_hours = OpeningHours(raw["current_opening_hours"])
         
         if ("editorial_summary" in raw.keys()):
-            self.desc = raw["editorial_summary"]
-        elif ("reviews" in raw.keys()):
-            print("summray not found, trying reviews: " + self.name)
-            self.desc = raw["reviews"][0]["text"]
-            print(self.desc)
+            self.desc = raw["editorial_summary"]["overview"]
+        #elif ("reviews" in raw.keys()):
+            #print("summray not found, trying reviews: " + self.name)
+            #self.desc = raw["reviews"][0]["text"]
+            #print(self.desc)
         else:
-            print("insufficient reviews")
+            #print("insufficient reviews")
+            self.desc=self.name
 
         if ("price_level" in raw.keys()):
             self.price_rating = int(raw["price_level"])
         else:
-            print("missing price level: " + self.name)
+            #print("missing price level: " + self.name)
+            pass
 
         if ("rating" in raw.keys()):
             self.rating = float(raw["rating"])
         else:
-            print("missing rating: " + self.name)
+            #print("missing rating: " + self.name)
+            pass
 
         self.categories = raw["types"]
 
