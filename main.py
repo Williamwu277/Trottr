@@ -1,6 +1,6 @@
 import maps as google_maps
 from place import *
-from recommendations import Recommendations
+from recommendations import *
 
 if __name__ == "__main__":
     maps = google_maps.Maps()
@@ -20,9 +20,11 @@ if __name__ == "__main__":
     
     r = Recommendations()
 
-    r.cull_by_price(locations, 0, 0)
+    r.cull_by_price(locations, PRICE_FREE)
     print(locations)
+
     r.import_nearby_stores(locations)
+    
     print(r.add_place(locations, "park", 60))
 
 

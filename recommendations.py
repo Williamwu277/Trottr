@@ -1,6 +1,6 @@
 import cohere as cohere_api
 from secret import *
-from place import Place
+from place import Place, strip_nonalphanumerical
 
 PRICE_FREE = (0, 0)
 PRICE_CHEAP = (0, 1)
@@ -40,7 +40,7 @@ class Recommendations:
             l = line.split(": ")
             time = l[1].split(' ')[0]
 
-            self.locations[places[index].name] = time
+            self.locations[strip_nonalphanumerical(places[index].name)] = time
             index += 1
 
     # generate a place that matches a certain theme and time limit
@@ -48,7 +48,7 @@ class Recommendations:
 
         _prompt = open("prompts/locationGenerationPrompt.txt", 'r').read()
         _prompt += "Places:\n"
-
+        print(self.locations)
         for place in places:
             _prompt += place.name + ": " + place.desc + " (" + str(self.locations[place.name]) + " minutes) (" + str(place.rating) + " stars)\n"
         
