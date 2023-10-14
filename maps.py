@@ -7,7 +7,7 @@ from const import *
 
 SEARCH_MODE = "near" # "near" or "find"
 
-class maps():
+class Maps():
     def __init__(self):
         self.client = googlemaps.Client(key=gmap_token)
         self.language = default_language
