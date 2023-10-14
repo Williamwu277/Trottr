@@ -42,3 +42,8 @@ class Place:
 
     def from_raw(self, raw: dict) -> None:
         #self.address = raw[""]
+        self.name = raw["name"]
+        self.open_hours = OpeningHours(raw["current_opening_hours"])
+        self.price_rating = int(raw["price_level"])
+        self.rating = float(raw["rating"])
+        self.categories = raw["types"]
