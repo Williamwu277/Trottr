@@ -1,11 +1,12 @@
+class OpeningHours:
+    def __init__(self, raw : dict):
+        pass
+
 class Place:
-    def __init__(self, _address : str, _name : str, _rating: float, time: Hours, type: list):
-        #self.address = 
-        pass
+    def __init__(self, address: str = None, name: str = None, rating: float = None, time: OpeningHours = None, categories: list = []):
+        self.address = address
+        
+        
 
-    def __init__(self, _raw : dict):
-        pass
-
-class Hours:
-    def __init__(self, _raw : dict):
+    def from_raw(self, raw: dict) -> None:
         pass
