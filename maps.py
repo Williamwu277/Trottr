@@ -21,7 +21,10 @@ class maps():
         return self.client.find_place(query, "textquery", fields = [], location_bias = self.__generate_location_bias(), language = self.language)
 
     def lookup_id(self, id) -> Place:
-        return self.client.place(id, fields = "", language = self.language)
+        response = self.client.place(id, fields = "", language = self.language)
+        place = Place()
+        place.from_raw(response)
+        return place
 
 #maps = maps()
 #maps.set_location([43.90315162960289, -79.43975174603027])
