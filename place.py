@@ -70,11 +70,11 @@ class Place:
 
 class Route:
     def __init__(self, place_a: Place, place_b: Place, raw: dict):
-        this.place_a = place_a
-        this.place_b = place_b
-        this.route = list()
-        this.total_dist = path['legs']['distance']['value']
-        this.total_time = path['legs']['duration']['value']
-        this.route.append(raw['legs']['steps']['start_location'])
+        self.place_a = place_a
+        self.place_b = place_b
+        self.route = list()
+        self.total_dist = path['legs']['distance']['value']
+        self.total_time = path['legs']['duration']['value']
+        self.route.append(raw['legs']['steps']['start_location'])
         for path in raw['legs']['steps']:
-            route.append(raw['legs']['steps']['end_location'])
+            self.route.append(raw['legs']['steps']['end_location'])
