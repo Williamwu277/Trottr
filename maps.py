@@ -11,7 +11,7 @@ SEARCH_FIELDS = ["name", "place_id", "editorial_summary", "type", "current_openi
 class Maps():
     def __init__(self):
         self.client = googlemaps.Client(key=gmap_token)
-        self.language = default_language
+        self.language = DEFAULT_LANGUAGE
         self.dist = 1000
 
     def set_location(self, lat: float, lng: float) -> None:
