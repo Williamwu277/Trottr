@@ -31,6 +31,10 @@ class maps():
         place.from_raw(response)
         return place
 
+    def gen_route(self, origin: tuple, destination: tuple):
+        return self.client.directions(origin, destination, mode="driving")
+
+
 #maps = maps()
 #maps.set_location([43.90315162960289, -79.43975174603027])
 #a = maps.search("Mon Sheong Restaurant")
