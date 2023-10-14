@@ -11,11 +11,14 @@ if __name__ == "__main__":
     locations = list()
     routes = list()
 
-    for result in maps.search("point of interest")["results"]:
+    for result in maps.search("bubble tea")["results"]:
         temp = maps.lookup_id(result["place_id"])
         locations.append(temp)
     
     r = Recommendations()
+
+    r.cull_by_price(locations, 0, 0)
+    print(locations)
     #r.import_nearby_stores(locations)
 
 

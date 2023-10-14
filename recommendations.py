@@ -2,7 +2,11 @@ import cohere as cohere_api
 from secret import *
 from place import Place
 
-
+PRICE_FREE = (0, 0)
+PRICE_CHEAP = (0, 1)
+PRICE_NORM = (1, 3)
+PRICE_EXP = (2, 4)
+PRICE_LUX = (3, 4)
 
 class Recommendations:
     def __init__(self):
@@ -61,3 +65,8 @@ class Recommendations:
         ).generations[0].text
 
         return response.rstrip()
+
+    def cull_by_price(self, locations: list, price_range: tuple):
+        for i in range(len(locations)-1, -1, -1):
+            if not (price_range[0] <= locations[i].price_rating and locations[i].price_rating <= price_range[1]): 
+                locations.pop(i)

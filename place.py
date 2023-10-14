@@ -29,10 +29,11 @@ class Period:
 
 
 class Place:
-    def __init__(self, place_id: str, address: str = None, name: str = None, rating: float = None, 
+    def __init__(self, place_id: str, address: str = None, location: tuple = None, name: str = None, rating: float = None, 
                     time: OpeningHours = None, price_rating: int = None, categories: list = [], description: str = None):
         self.place_id = place_id
         self.address = address
+        self.location = location
         self.name = name
         self.rating = rating
         self.open_hours = time
@@ -40,8 +41,13 @@ class Place:
         self.categories = categories
         self.desc = description
 
+    def __str__(self):
+        return name + " " + address
+    def __repr__(self):
+        return self.name + " " + self.address + "\n"
+
     def from_raw(self, raw: dict) -> None:
-        #self.address = raw[""]
+        self.address = raw["formatted_address"]
         self.place_id = raw['place_id']
         self.name = raw["name"]
         if ("current_opening_hours" in raw.keys()):
@@ -50,26 +56,29 @@ class Place:
         if ("editorial_summary" in raw.keys()):
             self.desc = raw["editorial_summary"]["overview"]
         #elif ("reviews" in raw.keys()):
-            #print("summray not found, trying reviews: " + self.name)
             #self.desc = raw["reviews"][0]["text"]
             #print(self.desc)
         else:
+            print("missing summary: " + self.name)
             #print("insufficient reviews")
             self.desc=self.name
 
         if ("price_level" in raw.keys()):
             self.price_rating = int(raw["price_level"])
         else:
-            #print("missing price level: " + self.name)
+            self.price_rating = 0
+            print("missing price level: " + self.name)
             pass
 
         if ("rating" in raw.keys()):
             self.rating = float(raw["rating"])
         else:
-            #print("missing rating: " + self.name)
+            print("missing rating: " + self.name)
             pass
 
         self.categories = raw["types"]
+    
+    
 
 class Route:
     def __init__(self, place_a: Place, place_b: Place, raw: dict):
