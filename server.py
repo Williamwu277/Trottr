@@ -4,10 +4,12 @@ from queue import SimpleQueue
 from const import *
 
 class Handler(SimpleHTTPRequestHandler):
+    def __init__(self):
+        self.requests = SimpleQueue()
+    
     def do_GET(self) -> None:
         # TODO: parse self.path to figure out what the client wants from the server
-        self.server.put_request(self.path)
-        pass
+        self.requests.put(self.path)
 
 class WebServer(HTTPServer):
     def __init__(self, server_address, RequestHandlerClass: Handler):
@@ -28,11 +30,8 @@ class Server:
         self.server.server_close()
         raise Exception("Server closed!")
 
-    def put_request(self, query: str) -> None:
-        self.server.requests.put(query)
-
     def get_request(self) -> str:
-        return self.server.requests.get()
+        return self.server.handler.requests.get()
     
     def send_message(self, msg: str) -> None:
         self.server.handler.wfile.write(msg)
