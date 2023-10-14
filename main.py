@@ -1,12 +1,16 @@
 import maps as google_maps
+from server import Server
 from place import *
 from recommendations import *
 
 if __name__ == "__main__":
     maps = google_maps.Maps()
+
     maps.set_location(43.90269544941747, -79.43994488708786)
     maps.set_distance(5*1000)
     #ai = reccomendations.Reccomendations()
+
+    server = Server()
 
     locations = list()
     routes = list()

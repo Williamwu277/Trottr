@@ -13,7 +13,7 @@ class Handler(SimpleHTTPRequestHandler):
 
 class WebServer(HTTPServer):
     def __init__(self, server_address, RequestHandlerClass: Handler):
-        super(server_address, RequestHandlerClass)
+        super(WebServer, self).__init__(server_address, RequestHandlerClass)
         self.handler = RequestHandlerClass
         self.requests = SimpleQueue()
 
@@ -23,7 +23,7 @@ class Server:
         print("Server hosted on port " + str(PORT))
 
         try:
-            self.serve_forever()
+            self.server.serve_forever()
         except KeyboardInterrupt:
             pass
 
