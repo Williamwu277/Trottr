@@ -47,7 +47,7 @@ class Place:
         self.desc = description
 
     def __str__(self):
-        return name + " " + address
+        return self.name + " " + self.address
     def __repr__(self):
         return self.name + " " + self.address + "\n"
 
