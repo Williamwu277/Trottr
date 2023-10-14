@@ -6,7 +6,7 @@ from secret import *
 from const import *
 
 SEARCH_MODE = "near" # "near" or "find"
-SEARCH_FIELDS = ["name", "place_id", "editorial_summary", "type", "current_opening_hours", "place_id", "price_level", "rating", "review"]
+SEARCH_FIELDS = ["name", "place_id", "editorial_summary", "type", "current_opening_hours", "place_id", "price_level", "rating", "review", "formatted_address"]
 
 class Maps():
     def __init__(self):

@@ -19,6 +19,9 @@ if __name__ == "__main__":
             break
     
     r = Recommendations()
+
+    r.cull_by_price(locations, 0, 0)
+    print(locations)
     r.import_nearby_stores(locations)
     print(r.add_place(locations, "park", 60))
 
