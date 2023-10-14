@@ -5,6 +5,8 @@ from place import Place
 from secret import *
 from const import *
 
+SEARCH_MODE = "near" # "near" or "find"
+
 class maps():
     def __init__(self):
         self.client = googlemaps.Client(key=gmap_token)
@@ -18,7 +20,10 @@ class maps():
         return "circle:" + '1000' + "@" + ",".join(map(str, self.location)) #TODO: implement self.radius
 
     def search(self, query: str): #TODO: specify output type
-        return self.client.find_place(query, "textquery", fields = [], location_bias = self.__generate_location_bias(), language = self.language)
+        if SEARCH_MODE == "find":
+            return self.client.find_place(query, "textquery", fields = [], location_bias = self.__generate_location_bias(), language = self.language)
+        elif SEARCH_MODE == "near":
+            return self.client.places_nearby(self.location, '1000', query, self.language)
 
     def lookup_id(self, id) -> Place:
         response = self.client.place(id, fields = "", language = self.language)
