@@ -1,1 +1,2 @@
-default_language = "en"
+DEFAULT_LANGUAGE = "en"
+PORT = 5001
