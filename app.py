@@ -34,3 +34,23 @@ print(r.add_place(locations, "park", 60))
 
 app.run("localhost", PORT)
 
+
+@app.route("/search", methods=["POST"])
+def search():
+    """
+    Search for a location given text information about it
+    {
+        "query": "University of Toronto Scarborough Campus"
+    }
+    """
+    return maps.search(request.args.get("query")) #TODO: parse place info
+
+@app.route("/suggested", methods=["POST"])
+def suggested():
+    """
+    Find places near user's set location
+    {
+        "query": "Restaurants"
+    }
+    """
+    return maps.find_nearby(request.arg.get("query")) #TODO: parse place info

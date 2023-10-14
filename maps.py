@@ -25,10 +25,10 @@ class Maps():
         return "circle:" + str(self.dist) + "@" + ",".join(map(str, self.location))
 
     def search(self, query: str): #TODO: specify output type
-        if SEARCH_MODE == "find":
-            return self.client.find_place(query, "textquery", fields = [], location_bias = self.__generate_location_bias(), language = self.language)
-        elif SEARCH_MODE == "near":
-            return self.client.places_nearby(self.location, self.dist, query, self.language)
+        return self.client.find_place(query, "textquery", fields = [], location_bias = self.__generate_location_bias(), language = self.language)
+        
+    def find_nearby(self, query: str):
+        return self.client.places_nearby(self.location, self.dist, query, self.language)
 
     def lookup_id(self, place_id) -> Place:
         response = self.client.place(place_id, fields = SEARCH_FIELDS, language = self.language)["result"]
