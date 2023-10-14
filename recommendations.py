@@ -7,6 +7,14 @@ PRICE_CHEAP = (0, 1)
 PRICE_NORM = (1, 3)
 PRICE_EXP = (2, 4)
 PRICE_LUX = (3, 4)
+PRICE_FULL = (0, 4)
+
+CATEGORIES = {
+    'snacks':['bubble tea', 'ice cream'],
+    'meals':[],
+    'outdoor':[],
+    'indoor':[]
+}
 
 class Recommendations:
     def __init__(self):
