@@ -1,0 +1,11 @@
+Given a list of locations, their descriptions, and time needed, pick one that matches a theme and time requirement best.
+
+Places:
+Mc Donalds: iconic fast food burgers and fries chain (30 minutes)
+Freeing Canada Station: Escape room (60 minutes)
+KFC: Fast food fried chicken chain (20 minutes)
+Lazer Quest: lazer gun fun (90 minutes)
+Theme: Fast food
+Time needed: 20 minutes
+Results: KFC
+--
