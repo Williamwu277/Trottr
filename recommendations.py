@@ -11,7 +11,7 @@ class Recommendations:
         self.locations = []
 
     # query for approximate amount of time visitors spend in each place
-    def import_nearby_stores(places):
+    def import_nearby_stores(self, places):
 
         _prompt = open("prompts/timeGenerationPrompt.txt", 'r').readlines()
         _prompt += "Places:\n"
@@ -40,7 +40,7 @@ class Recommendations:
             self.locations[place] = time
 
     # generate a place that matches a certain theme and time limit
-    def add_place(places, theme, time_requirement):
+    def add_place(self, places, theme, time_requirement):
 
         _prompt = open("prompts/locationGenerationPrompt.txt", 'r').readlines()
         _prompt += "Places:\n"
