@@ -24,20 +24,20 @@ class Recommendations:
         response = self.cohere.generate(
             model = 'command',
             prompt = _prompt,
-            max_tokens = 10000,
+            max_tokens = 50000,
             temperature = 1,
             k = 0,
             stop_sequences = ['--'],
             return_likelihoods = 'NONE'
         ).generations[0].text.split("\n")
-        response.pop(-1)
 
+        index = 0
         for line in response:
             l = line.split(": ")
-            place = l[0]
             time = l[1].split(' ')[0]
 
-            self.locations[place] = time
+            self.locations[places[index].name] = time
+            index += 1
 
     # generate a place that matches a certain theme and time limit
     def add_place(self, places, theme, time_requirement):
@@ -46,14 +46,14 @@ class Recommendations:
         _prompt += "Places:\n"
 
         for place in places:
-            _prompt += place.name + ": " + place.desc + "\n"
+            _prompt += place.name + ": " + place.desc + " (" + str(self.locations[place.name]) + " minutes) (" + str(place.rating) + " stars)\n"
         
         _prompt += "Theme: " + theme + "\nTime needed:" + str(time_requirement) + " minutes\nResults:\n"
 
         response = self.cohere.generate(
             model = 'command',
             prompt = _prompt,
-            max_tokens = 10000,
+            max_tokens = 50000,
             temperature = 1,
             k = 0,
             stop_sequences = ['--'],
