@@ -56,7 +56,7 @@ def search():
         response.append({
             'name': place.name,
             'distance': maps.get_dist((float(request.args.get("lat")), float(request.args.get("long")))),
-            'category': "food" if 'food' in place.categories else "entertainment",
+            'category': "food" if "food" in place.categories else "entertainment",
             'address': place.address,
             'location': place.location,
             'time': maps.get_time((float(request.args.get("lat")), float(request.args.get("long"))))
