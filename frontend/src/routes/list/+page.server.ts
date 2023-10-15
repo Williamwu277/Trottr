@@ -6,7 +6,7 @@ export const load: PageServerLoad = async () => {
 	const locations: Poi[] = getLocations();
 	const mappedData = locations.map((l) => [l.lat, l.lng]);
 
-	const res = await fetch('localhost/distance', {
+	const res = await fetch('localhost:5000/distance', {
 		method: 'GET',
 		body: JSON.stringify({ locations: mappedData })
 	});
