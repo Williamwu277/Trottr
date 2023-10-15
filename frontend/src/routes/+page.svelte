@@ -13,9 +13,9 @@
 
 	let loc: Promise<GeolocationPosition> = getLocation();
 
-	loc
-		.then((res) => {
+	loc.then((res) => {
 			// initialize server with starting location.
+			console.log(res)
 			fetch('http://localhost:5420/init', {
 				method: 'POST',
 				body: JSON.stringify({

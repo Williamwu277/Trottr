@@ -24,6 +24,7 @@ class Recommendations:
         self.path = []
         self.themequeue = ""
         self.themequeue_options = []
+        self.themelocs = []
 
     # query for approximate amount of time visitors spend in each place
     def import_nearby_stores(self, places):
@@ -57,9 +58,11 @@ class Recommendations:
             index += 1
 
     # generate a place that matches a certain theme and time limit
-    def add_place(self, places, nexttheme="entertainment", time_requirement=60):
+    def add_place(self, places, nexttheme:str=None, time_requirement=60):
         print(self.locations)
         print(places)
+        if (nexttheme == None):
+            nexttheme = "entertainment"
         theme = self.themequeue
         self.themequeue = nexttheme
         _prompt = open("prompts/locationGenerationPrompt.txt", 'r').read()
@@ -80,12 +83,16 @@ class Recommendations:
             return_likelihoods = "NONE"
         ).generations[0].text
 
+        print(response)
+
         place = None
         for nxt in places:
-            if nxt.name == response.rstrip():
+            print(nxt.name)
+            if nxt.name in response:
                 place = nxt
                 break
-        self.path.append(place)
+        if (place != None):
+            self.path.append(place)
 
     def cull_by_price(self, locations: list, price_range: tuple):
         for i in range(len(locations)-1, -1, -1):

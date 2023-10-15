@@ -38,7 +38,7 @@ def h():
             'location': r.path[i].location,
             'time': output[i]
         })
-    return json.dumps(response)
+    return {'res':response}
 
 @app.route("/init", methods=["POST"])
 #@cross_origin(origins=["http://localhost:5173"])
@@ -78,7 +78,7 @@ def init():
 
     r.themequeue_options = CATS
     r.themequeue = r.themequeue_options[0]
-
+    r.themelocs = locations
     print("a")
 
     return {}
@@ -142,7 +142,7 @@ def add():
     Find place 
     """
     #CATS = ["point of interest", "amusement park", "art gallery", "cafe", "bowling alley", "library", "museum", "park", "restaurant", "shopping mall", "tourist_attraction", "bubble tea", "bakery"]
-    r.add_place(r.path, r.themequeue_options[int(len(r.themequeue_options)*random.random())])
+    r.add_place(r.path, r.themelocs, r.themequeue_options[int(len(r.themequeue_options)*random.random())])
     return {}
 
 if __name__ == "__main__":
