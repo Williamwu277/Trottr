@@ -1,6 +1,6 @@
 import type Poi from "./models/poi.model";
 
-const db = window.sessionStorage;
+const db = sessionStorage;
 
 function addLocation(poi: Poi) {
     let pois = getLocations();
