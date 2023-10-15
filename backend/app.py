@@ -7,8 +7,10 @@ from datetime import datetime
 from place import *
 from recommendations import *
 from const import *
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins=["http://localhost:5173", "http://localhost:5000"])
 
 maps = google_maps.Maps()
 r = Recommendations()
