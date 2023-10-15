@@ -16,8 +16,10 @@ r = Recommendations()
 
 app.run("localhost", PORT)
 
-@app.route("/home", method=["POST"])
-def home():
+
+@app.route("/h", methods=["POST"])
+def h():
+    
     points = r.path
     time_stamps, output = [time()], []
     for i in range(1, len(points)):
@@ -104,12 +106,27 @@ def suggested():
         "query": "Restaurants"
     }
     """
-    return maps.find_nearby(request.arg.get("query")) #TODO: parse place info
+    nearby = maps.find_nearby('entertainment')
+    response = []
+    for p in nearby["results"]:
+        place = Place()
+        place.from_raw(p)
+        response.append({
+            'name': place.name,
+            'distance': maps.get_dist((float(request.args.get("lat")), float(request.args.get("long")))),
+            'category': "food" if "food" in place.categories else "entertainment",
+            'address': place.address,
+            'location': place.location,
+            'time': maps.get_time((float(request.args.get("lat")), float(request.args.get("long"))))
+        })
+
+    return  response#TODO: parse place info
+
 
 @app.route("/add", methods=["POST"])
 def add():
     """
     Find place 
     """
+    #CATS = ["point of interest", "amusement park", "art gallery", "cafe", "bowling alley", "library", "museum", "park", "restaurant", "shopping mall", "tourist_attraction", "bubble tea", "bakery"]
     r.add_place(r.path)
-    
