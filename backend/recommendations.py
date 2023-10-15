@@ -67,7 +67,7 @@ class Recommendations:
         print(self.locations)
         for place in places:
             _prompt += place.name + ": " + place.desc + " (" + str(self.locations[strip_nonalphanumerical(place.name)]) + " minutes) (" + str(place.rating) + " stars)\n"
-        
+   
         _prompt += "Theme: " + theme + "\nTime needed:" + str(time_requirement) + " minutes\nResults:\n"
 
         response = self.cohere.generate(

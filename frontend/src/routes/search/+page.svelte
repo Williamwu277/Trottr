@@ -6,7 +6,7 @@
 	export let data: PageServerData;
 	let poiName: string = '';
 
-	$: searchResults = fetch('http://localhost:5000/search', {
+	$: searchResults = fetch('http://localhost:5420/search', {
 		method: 'post',
 		body: JSON.stringify({ query: poiName })
 	});

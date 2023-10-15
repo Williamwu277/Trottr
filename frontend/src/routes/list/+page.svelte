@@ -16,7 +16,7 @@
 	let loc: Promise<GeolocationPosition> = getLocation();
 
 	function generate() {
-		fetch('http://localhost:5000/add', {
+		fetch('http://localhost:5420/add', {
 			method: 'POST'
 		});
 	}

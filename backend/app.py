@@ -8,19 +8,20 @@ from place import *
 from recommendations import *
 from const import *
 from flask_cors import CORS
+from flask_cors import cross_origin
+import json
 
 app = Flask(__name__)
-CORS(app, origins=["http://localhost:5173", "http://localhost:5000"])
+CORS(app, origins=["http://localhost:5173/", "http://localhost/", "http://localhost:5000/"])
 
 maps = google_maps.Maps()
 r = Recommendations()
 
-if __name__ == "__main__":
-    app.run("localhost", PORT)
 
 @app.route("/h", methods=["POST"])
+#@cross_origin(origins=["http://localhost:5173"])
 def h():
-    
+    print("a")
     points = r.path
     time_stamps, output = [time()], []
     for i in range(1, len(points)):
@@ -37,9 +38,10 @@ def h():
             'location': r.path[i].location,
             'time': output[i]
         })
-    return response
+    return json.dumps(response)
 
 @app.route("/init", methods=["POST"])
+#@cross_origin(origins=["http://localhost:5173"])
 def init():
     """
     Calls for the server to initialize the Trottr app
@@ -74,11 +76,16 @@ def init():
 
     r.import_nearby_stores(locations)
 
-    r.themequeue_options = temporary
-    r.themequeue = temporary[0]
+    r.themequeue_options = CATS
+    r.themequeue = r.themequeue_options[0]
+
+    print("a")
+
+    return {}
 
 
 @app.route("/search", methods=["POST"])
+#@cross_origin(origins=["http://localhost:5173"])
 def search():
     """
     Search for a location given text information about it
@@ -100,9 +107,10 @@ def search():
             'location': place.location,
             'time': maps.get_time((float(request.args.get("lat")), float(request.args.get("long"))))
         })
-    return response
+    return json.dumps(response)
 
 @app.route("/suggested", methods=["POST"])
+#@cross_origin(origins=["http://localhost:5173"])
 def suggested():
     """
     Find places near user's set location
@@ -124,14 +132,18 @@ def suggested():
             'time': maps.get_time((float(request.args.get("lat")), float(request.args.get("long"))))
         })
 
-    return  response#TODO: parse place info
+    return  json.dumps(response)#TODO: parse place info
 
 
 @app.route("/add", methods=["POST"])
+#@cross_origin(origins=["http://localhost:5173"])
 def add():
     """
     Find place 
     """
     #CATS = ["point of interest", "amusement park", "art gallery", "cafe", "bowling alley", "library", "museum", "park", "restaurant", "shopping mall", "tourist_attraction", "bubble tea", "bakery"]
-    r.add_place(r.path, r.themequeue_options[len(r.themequeue_options)*random.random()])
-    return
+    r.add_place(r.path, r.themequeue_options[int(len(r.themequeue_options)*random.random())])
+    return {}
+
+if __name__ == "__main__":
+    app.run("localhost", PORT, debug=True)

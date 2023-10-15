@@ -16,7 +16,7 @@
 	loc
 		.then((res) => {
 			// initialize server with starting location.
-			fetch('http://localhost:5000/init', {
+			fetch('http://localhost:5420/init', {
 				method: 'POST',
 				body: JSON.stringify({
 					lat: res.coords.latitude,
@@ -27,7 +27,7 @@
 		.catch((err) => console.log(err.message));
 
 	function generate() {
-		fetch('http://localhost:5000/add', {
+		fetch('http://localhost:5420/add', {
 			method: 'POST'
 		});
 	}
