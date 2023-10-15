@@ -10,10 +10,10 @@ PRICE_LUX = (3, 4)
 PRICE_FULL = (0, 4)
 
 CATEGORIES = {
-    'snacks':['bubble tea', 'ice cream'],
-    'meals':["resteraunt"],
-    'outdoor':["point of interest"],
-    'indoor':["arcade"]
+    'snacks':['bubble tea', 'cafe', 'bakery'],
+    'meals':["restaurant"],
+    'outdoor':["point of interest", "tourist_attraction", "park", "amusement park"],
+    'indoor':["arcade", "art gallery", "bowling alley", "museum", "library", "shopping mall"]
 }
 
 class Recommendations:
@@ -42,7 +42,8 @@ class Recommendations:
             stop_sequences = ['--'],
             return_likelihoods = 'NONE'
         ).generations[0].text.split("\n")
-
+        print(self.locations)
+        print(response)
         index = 0
         for line in response:
             l = line.split(": ")
@@ -58,7 +59,7 @@ class Recommendations:
         _prompt += "Places:\n"
         print(self.locations)
         for place in places:
-            _prompt += place.name + ": " + place.desc + " (" + str(self.locations[place.name]) + " minutes) (" + str(place.rating) + " stars)\n"
+            _prompt += place.name + ": " + place.desc + " (" + str(self.locations[strip_nonalphanumerical(place.name)]) + " minutes) (" + str(place.rating) + " stars)\n"
         
         _prompt += "Theme: " + theme + "\nTime needed:" + str(time_requirement) + " minutes\nResults:\n"
 

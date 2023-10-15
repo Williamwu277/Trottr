@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, url_for, make_response, jsonify
 import maps as google_maps
+import random
 from place import *
 from recommendations import *
 from const import *
@@ -9,20 +10,25 @@ app = Flask(__name__)
 maps = google_maps.Maps()
 r = Recommendations()
 
-maps.set_location()
+#maps.set_location()
 
 maps.set_location(43.90269544941747, -79.43994488708786)
-maps.set_distance(5*1000)
+maps.set_search_radius(5*1000)
 
 locations = list()
 routes = list()
 
-count = 0
-for result in maps.search("point of interest")["results"]:
-    temp = maps.lookup_id(result["place_id"])
-    locations.append(temp)
-    if count > 9:
-        break
+CATS = ["point of interest", "amusement park", "art gallery", "cafe", "bowling alley", "library", "museum", "park", "restaurant", "shopping mall", "tourist_attraction", "bubble tea", "bakery"]
+temporary = []
+
+for section in CATS:
+    for result in maps.search(section):
+        temp = maps.lookup_id(result)
+        if not temp in locations:
+            temporary.append(temp)
+
+random.shuffle(temporary)
+locations = [temporary[next] for next in range(0, min(len(temporary)-1, 15))]
 
 r.cull_by_price(locations, PRICE_FREE)
 print(locations)

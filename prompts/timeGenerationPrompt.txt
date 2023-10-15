@@ -7,6 +7,7 @@ KFC: Fast food fried chicken chain
 Lazer Quest: lazer gun fun
 Cha Time: Whimsical bubble tea shop
 Real Fruit Bubble Tea: Specialty store for bubble teas and smoothies
+Results:
 Mc Donalds: 30 minutes
 Freeing Canada Station: 60 minutes
 KFC: 30 minutes
