@@ -16,6 +16,25 @@ r = Recommendations()
 
 app.run("localhost", PORT)
 
+@app.route("/home", method=["POST"])
+def home():
+    points = r.path
+    time_stamps, output = [time()], []
+    for i in range(1, len(points)):
+        time_stamps.append(maps.get_seconds(tuple(points[i]), tuple(points[i+1])) + time_stamps[-1])
+    for nxt in time_stamps:
+        output.append(datetime.fromtimestamp(nxt).strftime("%I:%M:%S%p"))
+    response = []
+    for i in range(len(r.path)):
+        response.append({
+            'name': r.path[i].name,
+            'distance': 0,
+            'category': "food" if "food" in r.path[i].categories else "entertainment",
+            'address': r.path[i].address,
+            'location': r.path[i].location,
+            'time': output[i]
+        })
+    return response
 
 @app.route("/init", methods=["POST"])
 def init():
@@ -49,7 +68,6 @@ def init():
     locations = [temporary[next] for next in range(0, min(len(temporary)-1, 15))]
 
     r.cull_by_price(locations, PRICE_FREE)
-    print(locations)
 
     r.import_nearby_stores(locations)
 
@@ -88,13 +106,4 @@ def suggested():
     """
     return maps.find_nearby(request.arg.get("query")) #TODO: parse place info
 
-@app.route("/distance", methods=["GET"])
-def distance():
-    points = json.loads(request.args.get("locations"))
-    time_stamps, output = [time()], []
-    for i in range(1, len(points)):
-        time_stamps.append(maps.get_seconds(tuple(points[i]), tuple(points[i+1])) + time_stamps[-1])
-    for nxt in time_stamps:
-        output.append(datetime.fromtimestamp(nxt).strftime("%I:%M:%S%p"))
-    return output
     
