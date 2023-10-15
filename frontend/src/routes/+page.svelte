@@ -20,7 +20,7 @@
 				method: 'POST',
 				body: JSON.stringify({
 					lat: res.coords.latitude,
-					long: res.coords.longitude
+					lng: res.coords.longitude
 				})
 			});
 		})
