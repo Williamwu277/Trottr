@@ -1,3 +1,8 @@
+import re; 
+
+def strip_nonalphanumerical(string: str):
+    return re.sub('[^a-zA-Z0-9 ]+', '', string, flags=re.UNICODE) 
+
 class OpeningHours:
     def __init__(self, raw : dict):
         self.periods = list()
@@ -42,14 +47,15 @@ class Place:
         self.desc = description
 
     def __str__(self):
-        return name + " " + address
+        return self.name + " " + self.address
     def __repr__(self):
         return self.name + " " + self.address + "\n"
 
     def from_raw(self, raw: dict) -> None:
         self.address = raw["formatted_address"]
         self.place_id = raw['place_id']
-        self.name = raw["name"]
+        self.name = strip_nonalphanumerical(raw['name'])
+        self.location = str(raw['geometry']['location']['lat']) + " " + str(raw['geometry']['location']['lng'])
         if ("current_opening_hours" in raw.keys()):
             self.open_hours = OpeningHours(raw["current_opening_hours"])
         

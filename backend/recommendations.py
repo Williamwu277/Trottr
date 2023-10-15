@@ -1,12 +1,20 @@
 import cohere as cohere_api
 from secret import *
-from place import Place
+from place import Place, strip_nonalphanumerical
 
 PRICE_FREE = (0, 0)
 PRICE_CHEAP = (0, 1)
 PRICE_NORM = (1, 3)
 PRICE_EXP = (2, 4)
 PRICE_LUX = (3, 4)
+PRICE_FULL = (0, 4)
+
+CATEGORIES = {
+    'snacks':['bubble tea', 'cafe', 'bakery'],
+    'meals':["restaurant"],
+    'outdoor':["point of interest", "tourist_attraction", "park", "amusement park"],
+    'indoor':["arcade", "art gallery", "bowling alley", "museum", "library", "shopping mall"]
+}
 
 class Recommendations:
     def __init__(self):
@@ -34,13 +42,14 @@ class Recommendations:
             stop_sequences = ['--'],
             return_likelihoods = 'NONE'
         ).generations[0].text.split("\n")
-
+        print(self.locations)
+        print(response)
         index = 0
         for line in response:
             l = line.split(": ")
             time = l[1].split(' ')[0]
 
-            self.locations[places[index].name] = time
+            self.locations[strip_nonalphanumerical(places[index].name)] = time
             index += 1
 
     # generate a place that matches a certain theme and time limit
@@ -48,9 +57,9 @@ class Recommendations:
 
         _prompt = open("prompts/locationGenerationPrompt.txt", 'r').read()
         _prompt += "Places:\n"
-
+        print(self.locations)
         for place in places:
-            _prompt += place.name + ": " + place.desc + " (" + str(self.locations[place.name]) + " minutes) (" + str(place.rating) + " stars)\n"
+            _prompt += place.name + ": " + place.desc + " (" + str(self.locations[strip_nonalphanumerical(place.name)]) + " minutes) (" + str(place.rating) + " stars)\n"
         
         _prompt += "Theme: " + theme + "\nTime needed:" + str(time_requirement) + " minutes\nResults:\n"
 
