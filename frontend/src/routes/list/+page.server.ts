@@ -3,7 +3,7 @@ import type Poi from '$lib/models/poi.model';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	let locations: Poi[] = getLocations();
+	const locations: Poi[] = getLocations();
 	const mappedData = locations.map((l) => [l.lat, l.lng]);
 
 	const res = await fetch('localhost/distance', {
@@ -12,7 +12,11 @@ export const load: PageServerLoad = async () => {
 	});
 
     const json = await res.json();
-    locations = JSON.parse(json);
+    const times: string[] = JSON.parse(json);
+
+    for (let i = 0; i < locations.length; i++) {
+        locations[i].time = times[i];
+    }
 
 	return {
 		locations: locations
