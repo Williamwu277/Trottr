@@ -22,6 +22,7 @@ class Recommendations:
         # stores dictionary of each place by name
         self.locations = {}
         self.path = []
+        self.themequeue = []
 
     # query for approximate amount of time visitors spend in each place
     def import_nearby_stores(self, places):

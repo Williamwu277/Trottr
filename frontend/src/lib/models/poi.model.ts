@@ -1,10 +1,8 @@
 export default interface Poi {
-	name: string;
-	lat: string;
-	lng: string;
-	distance: string;
-	category: string;
-	address: string;
-	location: string;
-	time: string;
+	name: string; // mcdonald's
+	distance: string; // 194014910 km
+	category: string; // food/not food
+	address: string; // 123 yonge st
+	time: string; // 3:23 pm
+	location: string; // (x, y)
 }
