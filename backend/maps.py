@@ -3,7 +3,7 @@ import googlemaps
 from place import *
 from time import time
 from datetime import datetime
-from secret import *
+from secret import*
 from const import *
 
 SEARCH_MODE = "near" # "near" or "find"
@@ -61,12 +61,12 @@ class Maps():
         result = self.client.directions(origin, destination, mode="driving")[0]
         return result['legs'][0]['duration']['text']
 
-    def get_timestamp(self, origin: tuple, destination: tuple = None, timezone: str = "EST") -> float:
+    def get_seconds(self, origin: tuple, destination: tuple = None, timezone: str = "EST") -> float:
         if (destination == None):
             destination = self.location
         result = self.client.directions(origin, destination, mode="driving")[0]
-        seconds = result['legs'][0]['duration']['value'] + time()
-        return datetime.fromtimestamp(seconds).strftime("%I:%M:%S%p")
+        return result['legs'][0]['duration']['value']
+        #return datetime.fromtimestamp(seconds).strftime("%I:%M:%S%p")
 
 #maps = maps()
 #maps.set_location([43.90315162960289, -79.43975174603027])

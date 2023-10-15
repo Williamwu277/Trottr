@@ -1,6 +1,9 @@
 from flask import Flask, render_template, redirect, request, url_for, make_response, jsonify
 import maps as google_maps
 import random
+import json
+from time import time
+from datetime import datetime
 from place import *
 from recommendations import *
 from const import *
@@ -10,33 +13,38 @@ app = Flask(__name__)
 maps = google_maps.Maps()
 r = Recommendations()
 
-maps.set_location(43.90269544941747, -79.43994488708786)
-maps.set_search_radius(5*1000)
-
-locations = list()
-routes = list()
-
-CATS = ["point of interest", "amusement park", "art gallery", "cafe", "bowling alley", "library", "museum", "park", "restaurant", "shopping mall", "tourist_attraction", "bubble tea", "bakery"]
-temporary = []
-
-for section in CATS:
-    for result in maps.search(section):
-        temp = maps.lookup_id(result)
-        if not temp in locations:
-            temporary.append(temp)
-
-random.shuffle(temporary)
-locations = [temporary[next] for next in range(0, min(len(temporary)-1, 15))]
-
-r.cull_by_price(locations, PRICE_FREE)
-print(locations)
-
-r.import_nearby_stores(locations)
-
-print(r.add_place(locations, "park", 60))
-
 
 app.run("localhost", PORT)
+
+
+@app.route("/init", methods=["GET"])
+def init():
+    point = json.loads(request.args.get("query"))
+    maps.set_location(int(point[0]), int(point[1]))
+    maps.set_search_radius(5*1000)
+
+    locations = list()
+
+    CATS = ["point of interest", "amusement park", "art gallery", "cafe", "bowling alley", "library", "museum", "park", "restaurant", "shopping mall", "tourist_attraction", "bubble tea", "bakery"]
+    temporary = []
+
+    for section in CATS:
+        for result in maps.search(section):
+            temp = maps.lookup_id(result)
+            flag = False
+            for next in temporary:
+                if next.name == temp.name:
+                    flag = True
+            if not flag:
+                temporary.append(temp)
+
+    random.shuffle(temporary)
+    locations = [temporary[next] for next in range(0, min(len(temporary)-1, 15))]
+
+    r.cull_by_price(locations, PRICE_FREE)
+    print(locations)
+
+    r.import_nearby_stores(locations)
 
 
 @app.route("/search", methods=["POST"])
@@ -72,3 +80,14 @@ def suggested():
     }
     """
     return maps.find_nearby(request.arg.get("query")) #TODO: parse place info
+
+@app.route("/distance", methods=["GET"])
+def distance():
+    points = json.loads(request.args.get("locations"))
+    time_stamps, output = [time()], []
+    for i in range(1, len(points)):
+        time_stamps.append(maps.get_seconds(tuple(points[i]), tuple(points[i+1])) + time_stamps[-1])
+    for nxt in time_stamps:
+        output.append(datetime.fromtimestamp(nxt).strftime("%I:%M:%S%p"))
+    return output
+    
