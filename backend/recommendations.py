@@ -21,6 +21,7 @@ class Recommendations:
         self.cohere = cohere_api.Client(cohere_token)
         # stores dictionary of each place by name
         self.locations = {}
+        self.path = []
 
     # query for approximate amount of time visitors spend in each place
     def import_nearby_stores(self, places):
@@ -75,7 +76,12 @@ class Recommendations:
             return_likelihoods = "NONE"
         ).generations[0].text
 
-        return response.rstrip()
+        place = None
+        for nxt in places:
+            if nxt.name == response.rstrip():
+                place = nxt
+                break
+        self.path.append(place)
 
     def cull_by_price(self, locations: list, price_range: tuple):
         for i in range(len(locations)-1, -1, -1):
