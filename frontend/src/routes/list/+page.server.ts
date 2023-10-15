@@ -1,8 +1,8 @@
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const res = await fetch('localhost:5000/h', {
-		method: 'GET',
+	const res = await fetch('http://localhost:5000/h', {
+		method: 'POST',
 	});
 
 	const json = await res.json();
