@@ -106,4 +106,10 @@ def suggested():
     """
     return maps.find_nearby(request.arg.get("query")) #TODO: parse place info
 
+@app.route("/add", methods=["POST"])
+def add():
+    """
+    Find place 
+    """
+    r.add_place(r.path)
     
