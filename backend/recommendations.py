@@ -22,6 +22,8 @@ class Recommendations:
         # stores dictionary of each place by name
         self.locations = {}
         self.path = []
+        self.themequeue = ""
+        self.themequeue_options = []
 
     # query for approximate amount of time visitors spend in each place
     def import_nearby_stores(self, places):
@@ -55,9 +57,11 @@ class Recommendations:
             index += 1
 
     # generate a place that matches a certain theme and time limit
-    def add_place(self, places, theme="entertainment", time_requirement=60):
+    def add_place(self, places, nexttheme="entertainment", time_requirement=60):
         print(self.locations)
         print(places)
+        theme = self.themequeue
+        self.themequeue = nexttheme
         _prompt = open("prompts/locationGenerationPrompt.txt", 'r').read()
         _prompt += "Places:\n"
         print(self.locations)
