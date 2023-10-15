@@ -2,6 +2,8 @@
 	import Search from '~icons/material-symbols/search-rounded';
 	import ArrowBack from '~icons/material-symbols/arrow-back-ios-rounded';
 
+	export let text: string;
+
 </script>
 
 <div
@@ -13,6 +15,7 @@
 	<input
 		type="text"
 		placeholder="Search"
+		bind:value={text}
 		class="font-bold focus:font-normal outline-none placeholder:text-light bg-transparent focus:placeholder:text-light text-[20px] w-[224px]"
 	/>
 	<Search class="w-[32px] h-[32px] block"/>

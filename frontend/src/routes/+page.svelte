@@ -12,18 +12,25 @@
 	}
 
 	let loc: Promise<GeolocationPosition> = getLocation();
-	
-	loc.then((res) => {
-		// initialize server with starting location.
-		fetch('http://localhost:5000/init', {
-			method: 'GET',
-			body: JSON.stringify({
-				lat: res.coords.latitude,
-				long: res.coords.longitude
-			})
-		});
 
-	}).catch((err) => console.log(err.message));
+	loc
+		.then((res) => {
+			// initialize server with starting location.
+			fetch('http://localhost:5000/init', {
+				method: 'GET',
+				body: JSON.stringify({
+					lat: res.coords.latitude,
+					long: res.coords.longitude
+				})
+			});
+		})
+		.catch((err) => console.log(err.message));
+
+	function generate() {
+		fetch('http://localhost:5000/add', {
+			method: 'POST'
+		});
+	}
 </script>
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} />
@@ -56,7 +63,7 @@
 	/>
 {/await}
 
-<div class="flex flex-col items-center absolute top-10 left-0 w-screen">
+<div class="flex flex-col items-center absolute top-12 left-0 w-screen">
 	<a href="/search">
 		<SearchBar />
 	</a>
@@ -66,27 +73,11 @@
 >
 	<a
 		class="rounded-[19px] font-bold bg-accent text-light w-full text-[24px] h-[75px] flex justify-center items-center"
-		href="/list">Be a Trotter</a
+		href="/list"
+		on:click={generate}>Be a Trotter</a
 	>
 	<a
 		class="rounded-[19px] bg-sub text-accent w-full text-[18px] h-[51px] flex justify-center items-center"
 		href="/search">Create your own journey</a
 	>
 </div>
-
-<style>
-	.slide-up {
-		animation: slide-up-animation 0.8s ease-in-out;
-		animation-delay: 0.3s;
-		animation-fill-mode: both;
-	}
-
-	@keyframes slide-up-animation {
-		from {
-			transform: translateY(194px);
-		}
-		to {
-			transform: translateY(0%);
-		}
-	}
-</style>

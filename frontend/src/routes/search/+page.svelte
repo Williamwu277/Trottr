@@ -1,20 +1,16 @@
 <script lang="ts">
 	import SearchBar from '$lib/components/NewSearchBar.svelte';
+	import type { PageServerData } from './$types';
 
-	let width: number;
-	let height: number;
-
-	async function getLocation() {
-		const gl = navigator.geolocation;
-		return new Promise((resolve, reject) => {
-			gl.getCurrentPosition(resolve, reject, { enableHighAccuracy: true });
-		});
-	}
-
-	let loc = getLocation();
+	let poiName: string;
 </script>
 
-<svelte:window bind:innerWidth={width} bind:innerHeight={height} />;
-<div class="flex flex-col items-center absolute top-10 left-0 w-screen">
-	<SearchBar />
+<div class="w-screen pt-4 px-8">
+	<div class="mt-8 flex flex-col items-center">
+		<SearchBar bind:text={poiName} />
+	</div>
+	<h2 class="uppercase mt-6 text-accent font-bold text-[18px]">Suggested</h2>
+	<div class="flex flex-col items-center gap-[15px]">
+
+	</div>
 </div>

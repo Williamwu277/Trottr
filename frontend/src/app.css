@@ -3,3 +3,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.slide-up {
+    animation: slide-up-animation 0.8s ease-in-out;
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}
+
+@keyframes slide-up-animation {
+    from {
+        transform: translateY(194px);
+    }
+    to {
+        transform: translateY(0%);
+    }
+}
