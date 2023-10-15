@@ -1,4 +1,4 @@
-Given a list of locations and their descriptions estimate how long someone would stay there.
+Given a list of locations and their descriptions estimate how long someone would stay at each location.
 
 Places:
 Mc Donalds: iconic fast food burgers and fries chain
