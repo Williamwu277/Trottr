@@ -13,10 +13,10 @@ app = Flask(__name__)
 maps = google_maps.Maps()
 r = Recommendations()
 
+if __name__ == "__main__":
+    app.run("localhost", PORT)
 
-app.run("localhost", PORT)
-
-@app.route("/home", method=["POST"])
+@app.route("/home", methods=["POST"])
 def home():
     points = r.path
     time_stamps, output = [time()], []
