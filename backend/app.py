@@ -17,10 +17,17 @@ r = Recommendations()
 app.run("localhost", PORT)
 
 
-@app.route("/init", methods=["GET"])
+@app.route("/init", methods=["POST"])
 def init():
-    point = json.loads(request.args.get("query"))
-    maps.set_location(int(point[0]), int(point[1]))
+    """
+    Calls for the server to initialize the Trottr app
+    {
+        "lat": 43.783079746158016,
+        "lng": -79.1872947732961
+
+    }
+    """
+    maps.set_location(request.args.get("lat"), request.args.get("lng"))
     maps.set_search_radius(5*1000)
 
     locations = list()
