@@ -132,3 +132,4 @@ def add():
     """
     #CATS = ["point of interest", "amusement park", "art gallery", "cafe", "bowling alley", "library", "museum", "park", "restaurant", "shopping mall", "tourist_attraction", "bubble tea", "bakery"]
     r.add_place(r.path, r.themequeue_options[len(r.themequeue_options)*random.random()])
+    return

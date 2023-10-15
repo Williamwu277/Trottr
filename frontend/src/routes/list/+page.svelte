@@ -14,6 +14,12 @@
 	}
 
 	let loc: Promise<GeolocationPosition> = getLocation();
+
+	function generate() {
+		fetch('http://localhost:5000/add', {
+			method: 'POST'
+		});
+	}
 </script>
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} />
@@ -61,7 +67,7 @@
 		>
 		<button
 			class="bg-accent text-light rounded-[19px] flex justify-center items-center w-[199px] h-[65px]"
-			>Use AI</button
+			on:click={generate}>Use AI</button
 		>
 	</div>
 </div>

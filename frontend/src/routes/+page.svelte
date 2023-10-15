@@ -17,7 +17,7 @@
 		.then((res) => {
 			// initialize server with starting location.
 			fetch('http://localhost:5000/init', {
-				method: 'GET',
+				method: 'POST',
 				body: JSON.stringify({
 					lat: res.coords.latitude,
 					long: res.coords.longitude
