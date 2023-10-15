@@ -1,7 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import SearchBar from '$lib/components/HomeSearchBar.svelte';
-	import { addLocation } from '$lib/db.ts';
 
 	let width: number;
 	let height: number;
@@ -13,25 +11,19 @@
 		});
 	}
 
-	let loc = getLocation().then((res) => {
-		// initialize
+	let loc: Promise<GeolocationPosition> = getLocation();
+	
+	loc.then((res) => {
+		// initialize server with starting location.
 		fetch('http://localhost:5000/init', {
 			method: 'GET',
-			body: JSON.stringify([loc.coords.latitude, loc.coords.longitude])
+			body: JSON.stringify({
+				lat: res.coords.latitude,
+				long: res.coords.longitude
+			})
 		});
 
-		// add to local storage
-		addLocation(<Poi>{
-			name: 'Starting Location',
-			lat: res.coords.latitude,
-			lng: res.coords.longitude,
-			distance: 0,
-			category: none,
-			address: '',
-			location: '',
-			time: ''
-		});
-	});
+	}).catch((err) => console.log(err.message));
 </script>
 
 <svelte:window bind:innerWidth={width} bind:innerHeight={height} />
