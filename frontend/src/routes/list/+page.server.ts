@@ -1,35 +1,20 @@
-import type Poi from "$lib/models/poi.model";
-import type { PageServerLoad } from "./$types";
+import { getLocations } from '$lib/db';
+import type Poi from '$lib/models/poi.model';
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-    const locations: Poi[] = [
-        {
-            name: "mc donald",
-            distance: "0.1",
-            category: "food",
-            address: "123 yonge st",
-            location: "3294023 3294",
-            time: "12:43 pm"
-        },
-        {
-            name: "mc donald",
-            distance: "0.1",
-            category: "food",
-            address: "123 yonge st",
-            location: "3294023 3294",
-            time: "12:43 pm"
-        },
-        {
-            name: "mc donald",
-            distance: "0.1",
-            category: "food",
-            address: "123 yonge st",
-            location: "3294023 3294",
-            time: "12:43 pm"
-        },
-    ]
+	let locations: Poi[] = getLocations();
+	const mappedData = locations.map((l) => [l.lat, l.lng]);
 
-    return {
-        locations: locations
-    };
-}
+	const res = await fetch('localhost/distance', {
+		method: 'GET',
+		body: JSON.stringify({ locations: mappedData })
+	});
+
+    const json = await res.json();
+    locations = JSON.parse(json);
+
+	return {
+		locations: locations
+	};
+};

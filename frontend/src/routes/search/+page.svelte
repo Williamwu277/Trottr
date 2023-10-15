@@ -3,5 +3,5 @@
 </script>
 
 <div class="flex flex-col items-center absolute top-10 left-0 w-screen">
-	<SearchBar bgColor="accent" textColor="light" />
+	<SearchBar />
 </div>
