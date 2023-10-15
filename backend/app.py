@@ -72,6 +72,9 @@ def init():
 
     r.import_nearby_stores(locations)
 
+    r.themequeue_options = temporary
+    r.themequeue = temporary[0]
+
 
 @app.route("/search", methods=["POST"])
 def search():
@@ -105,7 +108,7 @@ def suggested():
         "query": "Restaurants"
     }
     """
-    nearby = maps.find_nearby('entertainment')
+    nearby = maps.find_nearby(r.themequeue)
     response = []
     for p in nearby["results"]:
         place = Place()
@@ -128,4 +131,4 @@ def add():
     Find place 
     """
     #CATS = ["point of interest", "amusement park", "art gallery", "cafe", "bowling alley", "library", "museum", "park", "restaurant", "shopping mall", "tourist_attraction", "bubble tea", "bakery"]
-    r.add_place(r.path)
+    r.add_place(r.path, r.themequeue_options[len(r.themequeue_options)*random.random()])
