@@ -41,9 +41,23 @@ def search():
     Search for a location given text information about it
     {
         "query": "University of Toronto Scarborough Campus"
+        "lat": "43.783079746158016",
+        "long": "-79.1872947732961"
     }
     """
-    return maps.search(request.args.get("query")) #TODO: parse place info
+    places = maps.search(request.args.get("query"))
+    response = []
+    for place_id in places:
+        place = maps.lookup_id(place_id)
+        response.append({
+            'name': place.name,
+            'distance': maps.get_dist((float(request.args.get("lat")), float(request.args.get("long")))),
+            'category': "food" if 'food' in place.categories else "entertainment",
+            'address': place.address,
+            'location': place.location,
+            'time': maps.get_time((float(request.args.get("lat")), float(request.args.get("long"))))
+        })
+    return response
 
 @app.route("/suggested", methods=["POST"])
 def suggested():

@@ -11,9 +11,9 @@ PRICE_FULL = (0, 4)
 
 CATEGORIES = {
     'snacks':['bubble tea', 'ice cream'],
-    'meals':[],
-    'outdoor':[],
-    'indoor':[]
+    'meals':["resteraunt"],
+    'outdoor':["point of interest"],
+    'indoor':["arcade"]
 }
 
 class Recommendations:

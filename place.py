@@ -55,6 +55,7 @@ class Place:
         self.address = raw["formatted_address"]
         self.place_id = raw['place_id']
         self.name = strip_nonalphanumerical(raw['name'])
+        self.location = str(raw['geometry']['location']['lat']) + " " + str(raw['geometry']['location']['lng'])
         if ("current_opening_hours" in raw.keys()):
             self.open_hours = OpeningHours(raw["current_opening_hours"])
         
