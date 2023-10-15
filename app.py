@@ -10,8 +10,6 @@ app = Flask(__name__)
 maps = google_maps.Maps()
 r = Recommendations()
 
-#maps.set_location()
-
 maps.set_location(43.90269544941747, -79.43994488708786)
 maps.set_search_radius(5*1000)
 
